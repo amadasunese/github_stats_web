@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for
 import requests
+import re
 
 app = Flask(__name__)
 
@@ -47,7 +48,16 @@ def get_github_stats(username):
         commits_count += len(commits_data)
 
         forks_count += repo['forks']
-        clones_count += repo['clone_url']
+        #clones_count += repo['clone_url']
+        clone_url = 'https://api.github.com/users/{username}'
+
+        # Use regular expressions to extract the number of clones
+        match = re.search(r'(\d+)', clone_url)
+
+        # Check if a number was found in the URL
+        if match:
+            # Convert the matched string to an integer and add it to clones_count
+            clones_count += int(match.group(0))
 
     # Fetch followers and following counts
     followers_count = user_data['followers']
