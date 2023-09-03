@@ -5,21 +5,27 @@ import re
 app = Flask(__name__)
 
 # Define routes for different pages
+
+
 @app.route('/')
 def index():
     return render_template('index.html')
+
 
 @app.route('/login')
 def login():
     return render_template('login.html')
 
+
 @app.route('/contact')
 def contact():
     return render_template('contact.html')
 
+
 @app.route('/register')
 def register():
     return render_template('register.html')
+
 
 def get_github_stats(username):
     # Fetch user info including name
@@ -48,7 +54,7 @@ def get_github_stats(username):
         commits_count += len(commits_data)
 
         forks_count += repo['forks']
-        #clones_count += repo['clone_url']
+        # clones_count += repo['clone_url']
         clone_url = 'https://api.github.com/users/{username}'
 
         # Use regular expressions to extract the number of clones
@@ -86,6 +92,7 @@ def get_github_stats(username):
 
     return jsonify(stats)
 
+
 @app.route('/get_github_stats', methods=['POST'])
 def fetch_github_stats():
     username = request.json.get('username')
@@ -93,6 +100,7 @@ def fetch_github_stats():
         return jsonify({'error': 'Please provide a username'}), 400
 
     return get_github_stats(username)
+
 
 if __name__ == '__main__':
     app.run(debug=True)

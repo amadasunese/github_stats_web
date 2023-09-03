@@ -1,0 +1,235 @@
+/* styles.css */
+
+/* Header styles */
+header {
+    background-image: url('bkground.jpg');
+    background-size: cover;
+    color: #fff;
+    text-align: center;
+    padding: 0px 0;
+}
+
+.navbar {
+    background: #3498db !important;
+    padding: auto;
+
+}
+
+
+/* Resize the image to fit within the container */
+.cover img {
+    max-width: 2000px;
+    max-height: auto;
+    display: block;
+    /* Remove extra space below the image */
+}
+
+/* Define the size of the containing div */
+.cover {
+    width: 100%;
+    /* Set the desired width */
+    height: 300px;
+    /* Set the desired height */
+    background-image: url('images/img4.PNG');
+    /* Set the path to your image */
+    background-size: cover;
+    background-position: center;
+    border: 1px solid #ccc;
+    /* Optional: Add a border for visualization */
+}
+
+header h1 {
+    font-size: 36px;
+}
+
+header p {
+    font-size: 18px;
+    margin-top: 20px;
+}
+
+header nav ul {
+    list-style: none;
+    margin-left: 30% !important;
+
+}
+
+header nav ul li {
+    display: inline;
+    margin-right: 20px;
+    background-color: none;
+    align-content: center;
+}
+
+header nav ul li a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    align-content: center;
+}
+
+/* Button styles */
+.cta-button {
+    display: inline-block;
+    padding: 10px 10px;
+    background-color: #0078d4;
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+    margin-top: 20px;
+    margin-bottom: 5px;
+}
+
+.cta-button:hover {
+    background-color: #005ea2;
+}
+
+/* Feature section styles */
+#features {
+    padding: 10px 0;
+    background-color: #f4f4f4;
+}
+
+.feature {
+    text-align: center;
+    margin-bottom: 30px;
+    margin-top: 0;
+}
+
+.feature img {
+    max-width: 100%;
+}
+
+.feature h3 {
+    font-size: 24px;
+    margin-top: 20px;
+}
+
+.feature p {
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+/* About section styles */
+#about {
+    padding: 10px;
+    border-color: #0078d4;
+    margin-top: 5px;
+    border: solid;
+    margin-left: 20px;
+    width: 96%;
+    align-items: left;
+}
+
+
+#about ul {
+    list-style: none;
+}
+
+#about ul li {
+    margin-bottom: 10px;
+}
+
+/* Video section styles */
+#video {
+    padding: 50px 0;
+    text-align: center;
+}
+
+/* Footer styles */
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+}
+
+/* Create a container to hold the two boxes */
+.box-container {
+    display: flex;
+    /* Use flexbox for layout */
+    justify-content: space-between;
+    /* Spread the two boxes horizontally */
+    padding: 20px;
+    /* Add some padding for spacing */
+}
+
+/* Style for the left box */
+.left-box {
+    flex: 1;
+    /* Allow the box to grow and take up available space */
+    background-color: #f0f0f0;
+    /* Background color for left box */
+    padding: 20px;
+    /* Add some padding inside the box */
+}
+
+/* Style for the right box */
+.right-box {
+    flex: 1;
+    background-color: #e0e0e0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    /* Stack the elements vertically */
+    align-items: flex-start;
+    /* Align the content to the left */
+}
+
+/* Style for the heading */
+.right-box h2 {
+    font-size: 18px;
+    /* Adjust the font size as needed */
+    margin-bottom: 10px;
+    /* Add spacing between heading and photo */
+}
+
+/* Style for the profile photo */
+.profile img {
+    width: 150px;
+    /* Adjust the width as needed */
+    height: 150px;
+    /* Set the height to match the width for a square photo */
+    border-radius: 50%;
+    /* Make it circular */
+    align-self: flex-end !important;
+    /* Align the photo to the right within its container */
+    margin-left: 10px;
+    /* Add spacing between photo and text */
+    float: right !important;
+    /* Float the photo to the right */
+}
+
+/* Style for the text content */
+.right-box p {
+    /* Add styles for the additional text content here */
+}
+
+/* Style for the name */
+.profile h2 {
+    font-size: 18px;
+    /* Adjust the font size as needed */
+}
+
+.profile {
+    float: right;
+    flex: 1;
+    background-color: #e0e0e0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    /* Stack the elements vertically */
+    align-items: flex-end;
+}
+
+.team {
+    float: left;
+    text-align: left;
+    flex: 1;
+    background-color: #e0e0e0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    /* Stack the elements vertically */
+    align-items: flex-start;
+}
