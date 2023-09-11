@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 # Define routes for different pages
 @app.route('/')
-def index():
+def home():
     return render_template('index.html')
 
 @app.route('/login')
