@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Stats Web Service</title>
+    <link rel="stylesheet" type="text/css" href="static/style.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="path-to-your-logo.png" alt="Your Logo">
+        </div>
+        <nav>
+            <a href="about.html">About</a>
+            <a href="register.html">Register</a>
+            <a href="login.html">Login</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+    </header>
+      
+    <div class="left-section">
+        <div class="container1">
+            <h1>GitHub Stats Web Service</h1>
+            <form id="githubForm">
+                <label for="username">GitHub Username:</label>
+                <input type="text" id="username" name="username" required>
+                <button type="submit">Get Stats</button>
+            </form>
+        </div>
+    </div>
+    
+    <div class="right-section">
+        <div class="container1">
+        <h1>Repository Stats:</h1>
+        <div id="result">
+            <script>
+                document.getElementById('githubForm').addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const username = document.getElementById('username').value;
+                    const response = await fetch('/get_github_stats', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ username })
+                    });
+                    const data = await response.json();
+                    const resultDiv = document.getElementById('result');
+                    resultDiv.innerHTML = `
+                        <h2>${data.name}</h2>
+                        <p>Followers: ${data.followers}</p>
+                        <p>Following: ${data.following}</p>
+                        <p>Commits: ${data.commits}</p>
+                        <p>Public Repositories: ${data.public_repos}</p>
+                    `;
+                });
+            </script>
+        </div>
+    </div>
+    </div>
+<div class="container-main">
+    <div class="mysection1">
+        <section>
+            <h2>GitHub Stats Web Service</h2>
+            <p>Welcome to the GitHub Stats Web Service! We're thrilled to have you here. Our service is designed to provide you with comprehensive and insightful statistics and analytics for your GitHub repositories. Whether you're a seasoned developer, a project manager, or just curious about the performance of your codebase, we've got you covered.</p>
+        </section>
+    </div>
+    <div class="mysection2">
+        <section class="sect">
+            <h2>Feedback</h2>
+            <p>Your feedback is important to us as it will help us to improve. Click on the link below to reach us</p>
+            <h3><a href="feedback.html">Feedback</a></h3>
+        </section>
+    </div>
+</div>   
+    <div id="result">
+    <script>
+        document.getElementById('githubForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const response = await fetch('/get_github_stats', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username })
+            });
+            const data = await response.json();
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `
+                <h2>${data.name}</h2>
+                <p>Followers: ${data.followers}</p>
+                <p>Following: ${data.following}</p>
+                <p>Commits: ${data.commits}</p>
+                <p>Public Repositories: ${data.public_repos}</p>
+            `;
+        });
+    </script>
+    </div>
+
+</body>
+<footer>
+    <p>© 2023 Ese Amadasun</p>
+</footer>
+</html>

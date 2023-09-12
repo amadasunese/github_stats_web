@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Stats Web Service</title>
+    <style>
+        /* Add your CSS styles here */
+    </style>
+</head>
+<body>
+    <h1>GitHub Stats Web Service</h1>
+    <form id="githubForm">
+        <label for="username">GitHub Username:</label>
+        <input type="text" id="username" name="username" required>
+        <button type="submit">Get Stats</button>
+    </form>
+    <div id="result"></div>
+    <script>
+        document.getElementById('githubForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const response = await fetch('/get_github_stats', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username })
+            });
+            const data = await response.json();
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `
+                <h2>${data.name}</h2>
+                <p>Followers: ${data.followers}</p>
+                <p>Following: ${data.following}</p>
+                <p>Public Repositories: ${data.public_repos}</p>
+            `;
+        });
+    </script>
+</body>
+</html>
