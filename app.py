@@ -1,3 +1,6 @@
+#!/usr/bin/python3
+# This is application that provides insightful statistics about GitHub repositories.
+
 from flask import Flask, render_template, request, jsonify, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
@@ -10,9 +13,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
 db = SQLAlchemy(app)
 app.secret_key = 'a97380abc78efeea392f4af3a04339ee'
 
-# Define the User model
-
-
+# User model
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
@@ -21,9 +22,7 @@ class User(UserMixin, db.Model):
     def __repr__(self):
         return f'<User {self.username}>'
 
-# Add a History model to your Flask app
-
-
+# Adding History model
 class History(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
@@ -95,7 +94,7 @@ def dashboard():
         user_id=current_user.id).order_by(History.timestamp.desc()).all()
     return render_template('dashboard.html', is_dashboard_page=is_dashboard_page, user_is_logged_in=user_is_logged_in, user=current_user, user_history=user_history)
 
-
+# Defining api to get repository statistics
 def get_github_stats(username):
     # Fetch user info including name
     url = f"https://api.github.com/users/{username}"
@@ -182,3 +181,7 @@ def logout():
 
 app.static_folder = 'static'
 
+if __name__ == '__main__':
+    with app.app_context():
+        db.create_all()
+    app.run(debug=True)
