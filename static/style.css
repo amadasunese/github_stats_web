@@ -1,31 +1,84 @@
 /* style.css */
-header {
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.header {
     background-color: #333;
     color: #fff;
-    padding: 10px 0;
     text-align: center;
-}
-
-header a {
-    color: #fff;
-    text-decoration: none;
-    margin: 0 10px;
-}
-
-section {
-    margin: 20px;
     padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #f5f5f5;
 }
 
-section h2 {
-    font-size: 24px;
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+ul li {
+    margin-bottom: 10px;
+}
+
+a {
+    text-decoration: none;
     color: #333;
 }
 
-section p {
-    font-size: 16px;
-    color: #555;
+a:hover {
+    color: #007bff;
+}
+
+
+/* Style the logo */
+.logo img {
+    width: 200px;
+    /* Adjust the width as needed */
+    height: auto;
+    /* Maintain aspect ratio */
+    margin-left: 20px;
+    /* Add margin to the left of the logo */
+}
+
+.cover img {
+
+    max-width: 2000px;
+    max-height: auto;
+    display: block;
+    /* Remove extra space below the image */
+}
+
+.cover {
+
+    width: 100%;
+    /* Set the desired width */
+    height: auto;
+    /* Set the desired height */
+    background-image: url('images/img4.PNG');
+    /* Set the path to your image */
+    background-size: cover;
+    background-position: center;
+    border: 1px solid #ccc;
+    margin-bottom: 5px;
+    border: solid;
+    /* Optional: Add a border for visualization */
+}
+
+.img-fluid {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    object-position: bottom;
 }

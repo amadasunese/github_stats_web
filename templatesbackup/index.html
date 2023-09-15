@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>GitHub Stats Web Service</title>
+
+        <!-- Add Bootstrap CSS (you can replace this with your own Bootstrap CSS link) -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+        <!-- Add your custom CSS file -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    </head>
+
+    <body>
+
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <img src="{{ url_for('static', filename='logo6.jpg') }}" alt="Logo" width="250" height="100">
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="\index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="\about.html">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="\register.html">Register</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/templates/register.html">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="contact.html">Contact</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Cover Image -->
+        <div class="container mt-4">
+            <div class="cover">
+                <img src="static/coverimage.JPG" alt="Project Cover Image" class="img-fluid">
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="container mt-4">
+            <h2>How to Use the Service</h2>
+            <p>To access the services provided by this application, follow these steps:</p>
+            <ol>
+                <li>If you don't have an account, <a href="/register">register here</a>.</li>
+                <li>If you already have an account, <a href="/login">login here</a>.</li>
+                <li>After logging in, you can access your <a href="/dashboard">dashboard</a> to view your GitHub
+                    statistics.</li>
+                <li>You can also fetch GitHub stats for a specific username by visiting the <a
+                        href="/get_github_stats">GitHub Stats</a> page.</li>
+                <li>To log out, simply click the "Logout" link in your dashboard.</li>
+            </ol>
+        </div>
+
+        <!-- Social Media Handles -->
+        <div class="container mt-4">
+            <div class="row">
+                <div class="col-md-6">
+                    <h3>Follow Us on Social Media</h3>
+                    <!-- Add your social media links here -->
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="btn btn-primary">Facebook</a></li>
+                        <li><a href="#" class="btn btn-info">Twitter</a></li>
+                        <li><a href="#" class="btn btn-danger">Instagram</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="bg-dark text-white py-4">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        &copy; 2023 GitHub Stats Web Service. All rights reserved.
+                    </div>
+                    <div class="col-md-6 text-md-right">
+                        <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Add Bootstrap JavaScript and jQuery -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    </body>
+
+</html>

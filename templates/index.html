@@ -1,95 +1,85 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GitHub Stats Web Service</title>
-    <link rel="stylesheet" type="text/css" href="static/style2.css">
-</head>
-<body>
-    <header>
-        <div class="logo">
-            <img src="images/logo6.jpg" alt="GitHub Stats Web Service">
-        </div>
-            <nav>
-                <a href="about.html">About</a>
-                <a href="register.html">Register</a>
-                <a href="login.html">Login</a>
-                <a href="contact.html">Contact</a>
-            </nav>
-    </header>
-            <div class="cover">
-                <img src="images/coverimage.JPG" alt="Project Cover Image">
-            </div>
-<div class="box-container">
-    <div class="left-box">
-        <h2>Register</h2>
-        <p><a href="register.html">Register Here</a></p>
-    </div>
-    <div class="right-box">
-        <h2>Login</h2>
-        <p><a href="login.html">Login Here</a></p>
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Your index page content goes here -->
+<!-- Cover Image -->
+<div class="container mt-4">
+    <div class="cover">
+        <img src="static/coverimage.JPG" alt="Project Cover Image" class="img-fluid">
     </div>
 </div>
-<div class="left-section">
-    <div class="container1">
-        <h1>GitHub Stats Web Service</h1>
-        <form id="githubForm">
-            <label for="username">GitHub Username:</label>
-            <input type="text" id="username" name="username" required>
-            <button type="submit">Get Stats</button>
-        </form>
-    </div>
+
+<!-- Main Content -->
+<div class="container mt-4">
+    <h2 class="text-center main-heading">How to Use the Service</h2>
+    <p class="intro-paragraph">To access the services provided by this application, follow these steps:</p>
+    <ol class="step-list">
+        <li>If you don't have an account, <a href="/register" class="action-link">register here</a>.</li>
+        <li>If you already have an account, <a href="/login" class="action-link">login here</a>.</li>
+        <li>After logging in, you can access your <a href="/dashboard" class="action-link">dashboard</a> to view your
+            GitHub statistics.</li>
+        <li>You can also fetch GitHub stats for a specific username by visiting the <a href="/get_github_stats"
+                class="action-link">GitHub Stats</a> page.</li>
+        <li>To log out, simply click the "Logout" link in your dashboard.</li>
+    </ol>
 </div>
-<div class="right-section">
-    <div class="container1">
-        <h1>Repository Stats:</h1>
-        <div id="result">
-            <script>
-                document.getElementById('githubForm').addEventListener('submit', async (e) => {
-                    e.preventDefault();
-                    const username = document.getElementById('username').value;
-                    const response = await fetch('/get_github_stats', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ username })
-                    });
-                    const data = await response.json();
-                    const resultDiv = document.getElementById('result');
-                    resultDiv.innerHTML = `
-                                    <h2>${data.name}</h2>
-                                    <p>Followers: ${data.followers}</p>
-                                    <p>Following: ${data.following}</p>
-                                    <p>Commits: ${data.commits}</p>
-                                    <p>Public Repositories: ${data.public_repos}</p>
-                                `;
-                });
-            </script>
-        </div>
-    </div>
-</div>
-<div class="container-main">
-    <div class="mysection1">
-        <section>
-            <h2>GitHub Stats Web Service</h2>
-            <p>Welcome to the GitHub Stats Web Service! We're thrilled to have you here. Our service is designed to
-                provide you with comprehensive and insightful statistics and analytics for your GitHub repositories.
-                Whether you're a seasoned developer, a project manager, or just curious about the performance of your
-                codebase, we've got you covered.</p>
-        </section>
-    </div>
-    <div class="mysection2">
-        <section class="sect">
-            <h2>Feedback</h2>
-            <p>Your feedback is important to us as it will help us to improve. Click on the link below to reach us</p>
-            <h3><a href="feedback.html">Feedback</a></h3>
-        </section>
-    </div>
-</div>
-<footer class="footer">
-    <p>&copy; 2023 GitHub Stats Web Service</p>
-</footer>
-</body>
-</html>
+<style>
+    /* Reset some default styles */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+}
+
+/* Center the heading */
+.main-heading {
+    text-align: center;
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Style the introductory paragraph */
+.intro-paragraph {
+    color: #007bff; /* Primary color */
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* Style the ordered list */
+.step-list {
+    list-style: decimal inside;
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+/* Style the list items */
+.step-list li {
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+
+/* Style the links within list items */
+.action-link {
+    color: #007bff; /* Link color */
+    text-decoration: none;
+    transition: color 0.3s ease-in-out;
+}
+
+.action-link:hover {
+    color: #0056b3; /* Hover color */
+}
+
+/* Style the cover image */
+.cover img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+</style>
+
+{% endblock %}

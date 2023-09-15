@@ -3,7 +3,6 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 import requests
 import re
-from datetime import datetime
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
@@ -11,8 +10,6 @@ db = SQLAlchemy(app)
 app.secret_key = 'a97380abc78efeea392f4af3a04339ee'
 
 # Define the User model
-
-
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
@@ -21,36 +18,19 @@ class User(UserMixin, db.Model):
     def __repr__(self):
         return f'<User {self.username}>'
 
-# Add a History model to your Flask app
-
-
-class History(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    username = db.Column(db.String(80), nullable=False)
-    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
-
-    def __repr__(self):
-        return f'<History {self.username}>'
-
-
 # Initialize Flask-Login
 login_manager = LoginManager()
 login_manager.login_view = "login"
 login_manager.init_app(app)
-
 
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
 
 # Define routes for different pages
-
-
 @app.route('/')
 def home():
     return render_template('index.html')
-
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -66,7 +46,6 @@ def login():
             flash('Login failed. Please check your credentials.', 'danger')
     return render_template('login.html')
 
-
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
@@ -79,22 +58,10 @@ def register():
         return redirect(url_for('login'))
     return render_template('register.html')
 
-
-@app.route('/about')
-def about():
-    return render_template('about.html')
-
-
 @app.route('/dashboard')
 @login_required
 def dashboard():
-    is_dashboard_page = True
-    user_is_logged_in = True
-    # Retrieve user's history (replace with your own logic)
-    user_history = History.query.filter_by(
-        user_id=current_user.id).order_by(History.timestamp.desc()).all()
-    return render_template('dashboard.html', is_dashboard_page=is_dashboard_page, user_is_logged_in=user_is_logged_in, user=current_user, user_history=user_history)
-
+    return render_template('dashboard.html', user=current_user)
 
 def get_github_stats(username):
     # Fetch user info including name
@@ -161,7 +128,6 @@ def get_github_stats(username):
 
     return jsonify(stats)
 
-
 @app.route("/get_github_stats", methods=["POST"])
 @login_required
 def fetch_github_stats():
@@ -171,14 +137,12 @@ def fetch_github_stats():
 
     return get_github_stats(username)
 
-
-@app.route('/logout', methods=['POST'])
+@app.route('/logout')
 @login_required
 def logout():
     logout_user()
     flash('Logged out successfully.', 'success')
     return redirect(url_for('home'))
-
 
 app.static_folder = 'static'
 
