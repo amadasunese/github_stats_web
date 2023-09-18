@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Your dashboard page content goes here -->
+<h3>Welcome to Your Dashboard, {{ user.username }}!</h3>
+<!-- Add dashboard content here -->
+<!-- Content -->
+<div class="container mt-5">
+    <div class="header">
+        
+    </div>
+    <h4>Enter the GitHub username</h4>
+    <form id="githubForm">
+        <label for="username">GitHub Username:</label>
+        <input type="text" id="username" name="username" class="form-control" required>
+        <br>
+        <button type="submit" class="btn btn-primary">Get Stats</button>
+    </form>
+    <div class="right-section">
+        <div class="container1">
+            <h2>Repository Stats:</h2>
+            <div id="result"></div>
+        </div>
+    </div>
+    <form id="webscrapping">
+    <form method="POST" action="/scrape">
+        <label for="url">URL to Scrape:</label>
+        <input type="text" id="url" name="url" required>
+        <button type="submit">Scrape</button>
+    </form>
+
+    <!-- Logout button -->
+    <div class="logout">
+        <form action="/logout" method="POST">
+            <button type="submit">Logout</button>
+        </form>
+    </div>
+    <!-- History section -->
+    <div class="history">
+        <h1>History</h1>
+        <ul>
+            {% for entry in user_history %}
+            <li>{{ entry.username }} - {{ entry.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- Flash Messages -->
+    <div class="flash-messages">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul class="flash">
+            {% for message in messages %}
+            <li class="{{ message[1] }}">{{ message[0] }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+    </div>
+</div>
+
+<!-- Your JavaScript code for GitHub Stats here -->
+<script>
+    document.getElementById('githubForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const username = document.getElementById('username').value;
+        const response = await fetch('/get_github_stats', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username })
+        });
+        const data = await response.json();
+        const resultDiv = document.getElementById('result');
+        resultDiv.innerHTML = `
+                <h2>${data.name}</h2>
+                <p>Followers: ${data.followers}</p>
+                <p>Following: ${data.following}</p>
+                <p>Commits: ${data.commits}</p>
+                <p>Public Repositories: ${data.public_repos}</p>
+            `;
+    });
+</script>
+{% endblock %}
