@@ -10,6 +10,7 @@ from datetime import datetime
 from forms import ContactForm
 from flask_mail import Mail, Message
 
+
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
 db = SQLAlchemy(app)
@@ -97,9 +98,9 @@ def contact():
       return render_template('contact.html', form=form)
     else:
       msg = Message(form.subject.data, sender='amadasunese@gmail.com', recipients=['amadasunese@gmail.com'])
-      msg.body = """ 
-From: %s &lt;%s&gt; 
-%s 
+      msg.body = """
+From: %s &lt;%s&gt;
+%s
 """ % (form.name.data, form.email.data, form.message.data)
       mail.send(msg)
       return render_template('contact.html', success=True)
@@ -208,7 +209,4 @@ def logout():
 
 app.static_folder = 'static'
 
-if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
-    app.run(debug=True)
+
