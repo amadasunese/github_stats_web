@@ -7,11 +7,21 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 import requests
 import re
 from datetime import datetime
+from forms import ContactForm
+from flask_mail import Mail, Message
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
 db = SQLAlchemy(app)
 app.secret_key = 'a97380abc78efeea392f4af3a04339ee'
+
+mail = Mail()
+app.config["MAIL_SERVER"] = "smtp.gmail.com"
+app.config["MAIL_PORT"] = 465
+app.config["MAIL_USE_SSL"] = True
+app.config["MAIL_USERNAME"] = 'amadasunese@gmail.com'
+app.config["MAIL_PASSWORD"] = 'irgy fvvp afma nmqk'
+mail.init_app(app)
 
 # User model
 class User(UserMixin, db.Model):
@@ -78,6 +88,23 @@ def register():
         return redirect(url_for('login'))
     return render_template('register.html')
 
+@app.route('/contact', methods=['GET', 'POST'])
+def contact():
+  form = ContactForm()
+  if request.method == 'POST':
+    if form.validate() == False:
+      flash('All fields are required.')
+      return render_template('contact.html', form=form)
+    else:
+      msg = Message(form.subject.data, sender='amadasunese@gmail.com', recipients=['amadasunese@gmail.com'])
+      msg.body = """ 
+From: %s &lt;%s&gt; 
+%s 
+""" % (form.name.data, form.email.data, form.message.data)
+      mail.send(msg)
+      return render_template('contact.html', success=True)
+  elif request.method == 'GET':
+    return render_template('contact.html', form=form)
 
 @app.route('/about')
 def about():

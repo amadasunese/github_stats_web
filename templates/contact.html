@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section id="contact" class="container mt-4">
+    
+    <h2>Contact Us</h2>
+    <p>Feel free to get in touch with us using the form below:</p>
+
+        <div class="contact">
+    
+        {% if success %}
+        <p>Thank you for your message. We'll get back to you shortly.</p>
+        {% else %}
+        {% for message in form.name.errors %}
+        <div class="flash">{{ message }}</div>
+        {% endfor %}
+        {% for message in form.email.errors %}
+        <div class="flash">{{ message }}</div>
+        {% endfor %}
+        {% for message in form.subject.errors %}
+        <div class="flash">{{ message }}</div>
+        {% endfor %}
+        {% for message in form.message.errors %}
+        <div class="flash">{{ message }}</div>
+        {% endfor %}
+        <form action="{{ url_for('contact') }}" method="post" class="needs-validation" novalidate>
+            {{ form.hidden_tag() }}
+
+            <div class="mb-3">
+                {{ form.name.label(class="form-label") }}
+                {{ form.name(class="form-control", placeholder="Your Name", required=true) }}
+                <div class="invalid-feedback">
+                    Please enter your name.
+                </div>
+            </div>
+
+            <div class="mb-3">
+                {{ form.email.label(class="form-label") }}
+                {{ form.email(class="form-control", placeholder="Your Email", required=true) }}
+                <div class="invalid-feedback">
+                    Please enter a valid email address.
+                </div>
+            </div>
+
+            <div class="mb-3">
+                {{ form.subject.label(class="form-label") }}
+                {{ form.subject(class="form-control", placeholder="Subject") }}
+            </div>
+
+            <div class="mb-3">
+                {{ form.message.label(class="form-label") }}
+                {{ form.message(class="form-control", placeholder="Your Message", required=true) }}
+                <div class="invalid-feedback">
+                    Please enter your message.
+                </div>
+            </div>
+
+            {{ form.submit(class="btn btn-primary") }}
+        </form>
+        {% endif %}
+    </div>
+</section>
+
+
+{% endblock %}
+
