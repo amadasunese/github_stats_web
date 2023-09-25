@@ -1,59 +1,90 @@
 {% extends "base.html" %}
 
 {% block content %}
-<!-- Your dashboard page content goes here -->
-<h3>Welcome to Your Dashboard, {{ user.username }}!</h3>
-<!-- Add dashboard content here -->
-<!-- Content -->
+<!-- Dashboard -->
 <div class="container mt-5">
-    <div class="header">
-        
-    </div>
-    <h4>Enter the GitHub username</h4>
-    <form id="githubForm">
-        <label for="username">GitHub Username:</label>
-        <input type="text" id="username" name="username" class="form-control" required>
-        <br>
-        <button type="submit" class="btn btn-primary">Get Stats</button>
-    </form>
-    <div class="right-section">
-        <div class="container1">
-            <h2>Repository Stats:</h2>
-            <div id="result"></div>
+    <!-- GitHub Stats Section -->
+    <div class="row">
+        <div class="col-md-6">
+            <h4>Enter the GitHub username</h4>
+            <form id="githubForm">
+                <label for="username">GitHub Username:</label>
+                <input type="text" id="username" name="username" class="form-control" required>
+                <br>
+                <button type="submit" class="btn btn-primary">Get Stats</button>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <div class="right-section">
+                <div class="container1">
+                    <h4>Repository Stats:</h4>
+                    <div id="result"></div>
+                </div>
+            </div>
         </div>
     </div>
-    <!-- Logout button -->
-    <div class="logout">
-        <form action="/logout" method="POST">
-            <button type="submit">Logout</button>
+
+    <!-- Web Scraping Form -->
+    <div class="row mt-3">
+        <form id="webScrapingForm">
+            <label for="url">URL to Scrape:</label>
+            <input type="text" id="url" name="url" required>
+            <button type="submit" class="btn btn-primary">Scrape</button>
         </form>
     </div>
+
+    <!-- Display Scraped Data -->
+    <div class="row mt-3">
+        <div class="col-md-6">
+            <div id="scrapedData"></div>
+        </div>
+    </div>
+
+    <!-- Logout button -->
+    <div class="row mt-3">
+        <div class="col-md-12">
+            <div class="logout">
+                <form action="/logout" method="POST">
+                    <button type="submit">Logout</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- History section -->
-    <div class="history">
-        <h1>History</h1>
-        <ul>
-            {% for entry in user_history %}
-            <li>{{ entry.username }} - {{ entry.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</li>
-            {% endfor %}
-        </ul>
+    <div class="row mt-3">
+        <div class="col-md-12">
+            <div class="history">
+                <h1>History</h1>
+                <ul>
+                    {% for entry in user_history %}
+                    <li>{{ entry.username }} - {{ entry.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
     </div>
 
     <!-- Flash Messages -->
-    <div class="flash-messages">
-        {% with messages = get_flashed_messages() %}
-        {% if messages %}
-        <ul class="flash">
-            {% for message in messages %}
-            <li class="{{ message[1] }}">{{ message[0] }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
-        {% endwith %}
+    <div class="row mt-3">
+        <div class="col-md-12">
+            <div class="flash-messages">
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                <ul class="flash">
+                    {% for message in messages %}
+                    <li class="{{ message[1] }}">{{ message[0] }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                {% endwith %}
+            </div>
+        </div>
     </div>
 </div>
-
-<!-- Your JavaScript code for GitHub Stats here -->
+<!-- JavaScript code for GitHub Stats and Web Scraping
 <script>
+    // GitHub Stats
     document.getElementById('githubForm').addEventListener('submit', async (e) => {
         e.preventDefault();
         const username = document.getElementById('username').value;
@@ -67,12 +98,60 @@
         const data = await response.json();
         const resultDiv = document.getElementById('result');
         resultDiv.innerHTML = `
-                <h2>${data.name}</h2>
-                <p>Followers: ${data.followers}</p>
-                <p>Following: ${data.following}</p>
-                <p>Commits: ${data.commits}</p>
-                <p>Public Repositories: ${data.public_repos}</p>
-            `;
+            <h2>${data.name}</h2>
+            <p>Followers: ${data.followers}</p>
+            <p>Following: ${data.following}</p>
+            <p>Commits: ${data.commits}</p>
+            <p>Public Repositories: ${data.public_repos}</p>
+        `;
+    }); -->
+<script>
+    // GitHub Stats
+    document.getElementById('githubForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const username = document.getElementById('username').value;
+        const response = await fetch('/get_github_stats', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username })
+        });
+        const data = await response.json();
+        
+        // Log the data to the console for debugging
+        console.log(data);
+        
+        const resultDiv = document.getElementById('result');
+        resultDiv.innerHTML = `
+            <h2>${data.name}</h2>
+            <p>Followers: ${data.followers}</p>
+            <p>Following: ${data.following}</p>
+            <p>Commits: ${data.commits}</p>
+            <p>Public Repositories: ${data.public_repos}</p>
+        `;
+    });
+
+    // Web Scraping
+    document.getElementById('webScrapingForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const url = document.getElementById('url').value;
+        const response = await fetch('/scrape', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: `url=${encodeURIComponent(url)}`
+        });
+        const data = await response.json();
+        const scrapedDataDiv = document.getElementById('scrapedData');
+        scrapedDataDiv.innerHTML = `
+            <h2>Scraped Data from ${data.url}</h2>
+            <ul>
+                ${data.links.map(link => `<li>${link}</li>`).join('')}
+            </ul>
+        `;
     });
 </script>
+
 {% endblock %}
